@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './game.component.css'
 })
 export class GameComponent {
-
+  constructor (){
+    console.log('im here')
+  }
 }
