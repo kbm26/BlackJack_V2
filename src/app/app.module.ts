@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppInitializationModule } from './app-initialization.module';
 import { CoreModule } from './core/core.module';
@@ -14,7 +13,6 @@ import { SettingModule } from './setting/setting.module';
 import { UserModule } from './user/user.module';
 
 @NgModule({
-  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,6 +28,5 @@ import { UserModule } from './user/user.module';
     UserModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -27,8 +27,11 @@ export class GameService {
     'K': [10],
   }
 
+  constructor () {
+    this.generateDeck();
+    this.shuffleDeck();
+  }
   private generateDeck(): void {
-    const numberOfCards = 52 //remove this in the future, hard coding bad
     for (const suit of this.suits){
       for (const symbol of this.symbols){
         this.deck.push({
