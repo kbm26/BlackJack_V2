@@ -62,34 +62,47 @@ export class GameService {
     return this.dealersHand
   }
 
-  public dealToHand(hand: Card[]): void {
+  private dealToHand(hand: Card[]): void {
     const card = this.hit();
-    if (card === undefined) {
-      hand.push(card!)
+    if (card !== undefined) {
+      hand.push(card)
     } else {
       // do not add a undefined card to a hand
     }
   }
 
   public calculateHand(hand: Card[]): number {
-    let value = 0;
+    let total = 0;
+    let aces = 0;
+
     for (const card of hand) {
-      value += card.value[1] || card.value[0]
+      if (card.symbol === 'A') {
+        total += 11;
+        aces += 1;
+      } else {
+        total += card.value[0];
+      }
     }
-    return value
+
+    while (total > 21 && aces > 0) {
+      total -= 10;
+      aces -= 1;
+    }
+
+    return total;
   }
 
   private isBust(hand: Card[]): boolean {
-    return this.calculateHand(hand) >= 21;
+    return this.calculateHand(hand) > 21;
   }
 
-  public isGameOver(playersHand: Card[], dealersHand: Card[]): boolean {
-    return this.isBust(playersHand) || this.isBust(dealersHand)
+  public isGameOver(): boolean {
+    return this.isBust(this.playersHand) || this.isBust(this.dealersHand);
   }
 
-  public endingMessage(playersHand: Card[], dealersHand: Card[]): string {
-    const playerValue = this.calculateHand(playersHand);
-    const dealerValue = this.calculateHand(dealersHand);
+  public endingMessage(): string {
+    const playerValue = this.calculateHand(this.playersHand);
+    const dealerValue = this.calculateHand(this.dealersHand);
 
     if (playerValue > 21) {
       return 'Dealer wins';
@@ -104,9 +117,33 @@ export class GameService {
     }
   }
 
-  public resetGame (): void {
-    this.deck = [];
-    this.playersHand = []
-    this.dealersHand = []
+  public isPlayerBusted(): boolean {
+    return this.isBust(this.playersHand);
   }
+
+  public dealToPlayer(): void {
+    this.dealToHand(this.playersHand);
+  }
+
+  public dealToDealer(): void {
+    this.dealToHand(this.playersHand);
+  }
+
+  public dealerPlay(): void {
+    while (this.calculateHand(this.dealersHand) < 17) {
+      this.dealToDealer();
+    }
+  }
+
+  public resetGame(): void {
+    this.deck = [];
+    this.playersHand = [];
+    this.dealersHand = [];
+    this.generateDeck();
+    this.shuffleDeck();
+    this.dealToPlayer();
+    this.dealToPlayer();
+    this.dealToDealer();
+  }
+
 }

@@ -1,3 +1,17 @@
-<section>
-  <h1>BLACK JACK</h1>
-</section>
+<div class="game-container">
+  <h1>Blackjack Game</h1>
+
+  <app-dealer-hand></app-dealer-hand>
+
+  <div class="actions" *ngIf="!result">
+    <button (click)="hit()">Hit</button>
+    <button (click)="stand()">Stand</button>
+  </div>
+
+  <div class="result" *ngIf="result">
+    <h2>{{ result }}</h2>
+    <button (click)="playAgain()">Play Again</button>
+  </div>
+
+  <app-player-hand></app-player-hand>
+</div>

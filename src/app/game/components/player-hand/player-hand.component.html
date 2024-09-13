@@ -1,1 +1,9 @@
-<p>player-hand works!</p>
+<div class="hand">
+  <h2>Your Hand ({{ gameService.calculateHand(gameService.getPlayersHand()) }})</h2>
+  <div class="cards">
+    <app-card
+      *ngFor="let card of gameService.getPlayersHand()"
+      [card]="card">
+    </app-card>
+  </div>
+</div>
