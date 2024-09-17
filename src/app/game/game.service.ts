@@ -97,7 +97,7 @@ export class GameService {
   }
 
   public isGameOver(): boolean {
-    return this.isBust(this.playersHand) || this.isBust(this.dealersHand);
+    return this.isBust(this.playersHand) || this.isBust(this.dealersHand) || this.calculateHand(this.playersHand) === 21 || this.calculateHand(this.playersHand) === 21;
   }
 
   public endingMessage(): string {
@@ -105,15 +105,15 @@ export class GameService {
     const dealerValue = this.calculateHand(this.dealersHand);
 
     if (playerValue > 21) {
-      return 'Dealer wins';
+      return 'You bust, Dealer wins';
     } else if (dealerValue > 21) {
-      return 'Player wins';
+      return 'Dealer bust, You wins';
     } else if (playerValue > dealerValue) {
-      return 'Player wins';
+      return 'You win';
     } else if (dealerValue > playerValue) {
       return 'Dealer wins';
     } else {
-      return 'It’s a tie!';
+      return 'It’s a Push!';
     }
   }
 
@@ -126,7 +126,7 @@ export class GameService {
   }
 
   public dealToDealer(): void {
-    this.dealToHand(this.playersHand);
+    this.dealToHand(this.dealersHand);
   }
 
   public dealerPlay(): void {

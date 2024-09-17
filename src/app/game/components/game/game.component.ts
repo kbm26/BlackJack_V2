@@ -22,16 +22,20 @@ export class GameComponent {
 
   hit(): void {
     this.gameService.dealToPlayer();
-    if (this.gameService.isPlayerBusted()) {
-      this.result = 'You busted! Dealer wins.';
+    if (this.gameService.isGameOver()) {
+      this.result = this.gameService.endingMessage();
+    } else {
+      //Game is not over, Continue
     }
   }
 
   stand(): void {
-    this.gameService.dealerPlay();
-    if(this.gameService.isGameOver()) {
-      this.result = this.gameService.endingMessage();
+    if(!this.gameService.isGameOver()) {
+      this.gameService.dealerPlay();
+    } else {
+      //Game over
     }
+    this.result = this.gameService.endingMessage();
   }
 
   playAgain(): void {
