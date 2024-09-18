@@ -5,26 +5,26 @@ import { Card } from './game.interfaces'
 })
 export class GameService {
   private deck: Card[] = [];
-  private suits: string[] = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
-  private symbols: string[] = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+  private suits: string[] = ['h', 'd', 'c', 's'];
+  private symbols: string[] = ['two', 'there', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king', 'ace'];
 
   private playersHand : Card[] = []
   private dealersHand : Card[] = []
 
   private values = {
-    'A': [1, 11],
-    '2': [2],
-    '3': [3],
-    '4': [4],
-    '5': [5],
-    '6': [6],
-    '7': [7],
-    '8': [8],
-    '9': [9],
-    '10': [10],
-    'J': [10],
-    'Q': [10],
-    'K': [10],
+    'ace': [1, 11],
+    'two': [2],
+    'three': [3],
+    'four': [4],
+    'five': [5],
+    'six': [6],
+    'seven': [7],
+    'eight': [8],
+    'nine': [9],
+    'ten': [10],
+    'jack': [10],
+    'queen': [10],
+    'king': [10],
   }
 
   constructor () {
@@ -38,6 +38,7 @@ export class GameService {
           value: this.values[symbol as keyof typeof this.values],
           symbol: symbol,
           suit: suit,
+          display: `${symbol}${suit}.svg`,
         })
       }
     }
@@ -76,7 +77,7 @@ export class GameService {
     let aces = 0;
 
     for (const card of hand) {
-      if (card.symbol === 'A') {
+      if (card.symbol === 'ace') {
         total += 11;
         aces += 1;
       } else {
