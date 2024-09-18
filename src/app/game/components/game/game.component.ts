@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { GameService } from '../../game.service';
 import { DealerHandComponent } from "../dealer-hand/dealer-hand.component";
 import { PlayerHandComponent } from "../player-hand/player-hand.component";
@@ -7,7 +8,7 @@ import { PlayerHandComponent } from "../player-hand/player-hand.component";
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, DealerHandComponent, PlayerHandComponent],
+  imports: [CommonModule, DealerHandComponent, PlayerHandComponent, MatButtonModule],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css'
 })
