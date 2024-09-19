@@ -1,17 +1,17 @@
-<div class="game-container">
+<section class="game-container">
   <h1>Blackjack Game</h1>
 
   <app-dealer-hand></app-dealer-hand>
 
-  <div class="actions" *ngIf="!result">
-    <button mat-stroked-button (click)="hit()">Hit</button>
-    <button mat-stroked-button (click)="stand()">Stand</button>
-  </div>
+  <section class="actions" *ngIf="!result">
+    <button mat-stroked-button color="primary" (click)="hit()">Hit</button>
+    <button mat-stroked-button color="primary" (click)="stand()">Stand</button>
+  </section>
 
-  <div class="result" *ngIf="result">
+  <section class="result" *ngIf="result">
     <h2>{{ result }}</h2>
     <button mat-stroked-button (click)="playAgain()">Play Again</button>
-  </div>
+  </section>
 
   <app-player-hand></app-player-hand>
-</div>
+</section>

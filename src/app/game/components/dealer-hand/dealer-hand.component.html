@@ -1,10 +1,13 @@
-<!-- src/app/game/components/dealer-hand/dealer-hand.component.html -->
 <div class="hand">
-  <h2>Dealer's Hand ({{ gameService.calculateHand(gameService.getDealersHand()) }})</h2>
-  <div class="cards">
+  <div *ngIf="gameService.isGameOver()"  class="cards">
+    <app-card ></app-card>
     <app-card
       *ngFor="let card of gameService.getDealersHand()"
-      [card]="card">
+      [display]="card.display">
     </app-card>
+  </div>
+  <div *ngIf="!gameService.isGameOver()"  class="cards">
+    <app-card display="cardBack.svg"></app-card>
+    <app-card [display]="gameService.getDealersFirstCard().display"></app-card>
   </div>
 </div>

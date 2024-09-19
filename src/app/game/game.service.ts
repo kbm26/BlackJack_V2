@@ -6,7 +6,7 @@ import { Card } from './game.interfaces'
 export class GameService {
   private deck: Card[] = [];
   private suits: string[] = ['h', 'd', 'c', 's'];
-  private symbols: string[] = ['two', 'there', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king', 'ace'];
+  private symbols: string[] = ['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king', 'ace'];
 
   private playersHand : Card[] = []
   private dealersHand : Card[] = []
@@ -75,7 +75,7 @@ export class GameService {
   public calculateHand(hand: Card[]): number {
     let total = 0;
     let aces = 0;
-
+    if (hand.length > 0)
     for (const card of hand) {
       if (card.symbol === 'ace') {
         total += 11;
@@ -134,6 +134,10 @@ export class GameService {
     while (this.calculateHand(this.dealersHand) < 17) {
       this.dealToDealer();
     }
+  }
+
+  public getDealersFirstCard(): Card {
+    return this.dealersHand[0]
   }
 
   public resetGame(): void {

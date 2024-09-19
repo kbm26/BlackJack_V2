@@ -3,7 +3,7 @@
   <div class="cards">
     <app-card
       *ngFor="let card of gameService.getPlayersHand()"
-      [card]="card">
+      [display]="card.display">
     </app-card>
   </div>
 </div>
