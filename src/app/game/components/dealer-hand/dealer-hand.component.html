@@ -1,13 +1,10 @@
-<div class="hand">
-  <div *ngIf="gameService.isGameOver()"  class="cards">
-    <app-card ></app-card>
-    <app-card
-      *ngFor="let card of gameService.getDealersHand()"
-      [display]="card.display">
-    </app-card>
-  </div>
-  <div *ngIf="!gameService.isGameOver()"  class="cards">
-    <app-card display="cardBack.svg"></app-card>
-    <app-card [display]="gameService.getDealersFirstCard().display"></app-card>
-  </div>
+<div *ngIf="gameService.isGameOver()"  class="cards">
+  <app-card
+    *ngFor="let card of gameService.getDealersHand()"
+    [display]="card.display">
+  </app-card>
+</div>
+<div *ngIf="!gameService.isGameOver()"  class="cards">
+  <app-card display="cardBack.svg"></app-card>
+  <app-card [display]="gameService.getDealersFirstCard().display"></app-card>
 </div>

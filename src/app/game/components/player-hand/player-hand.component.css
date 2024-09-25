@@ -1,0 +1,88 @@
+:root {
+  --card-width: 10rem;
+  --card-animation: slide-down 1s ease-in-out backwards;
+
+  height: 100%;
+}
+
+.cards {
+  padding: 100px;
+}
+
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    rotate: 45deg;
+    transform: translateX(50vw) translateY(-50vh) rotate(5deg);
+  }
+
+  40% {
+    opacity: 100%;
+  }
+
+  75% {
+    transform: translateX(0) translateY(0) rotate(0);
+  }
+
+  100% {
+    transform: translateX(inset) translateY(inset) rotate(inset);
+  }
+}
+
+app-card:nth-of-type(1) {
+  rotate: -45deg;
+  animation: var(--card-animation);
+}
+app-card:nth-of-type(1):hover {
+  transform: translateX(calc(-2rem * sin(40deg)))
+    translateY(calc(-2rem * cos(40deg))) rotate(-10deg);
+}
+
+app-card:nth-of-type(2) {
+  rotate: -30deg;
+  animation: var(--card-animation) 0.2s;
+}
+app-card:nth-of-type(2):hover {
+  transform: translateX(calc(-2rem * sin(35deg)))
+    translateY(calc(-2rem * cos(35deg))) rotate(-5deg);
+}
+
+app-card:nth-of-type(3) {
+  rotate: -15deg;
+  animation: var(--card-animation) 0.4s;
+}
+app-card:nth-of-type(3):hover {
+  transform: translateX(calc(-2rem * sin(20deg)))
+    translateY(calc(-2rem * cos(20deg))) rotate(-5deg);
+}
+
+app-card:nth-of-type(4) {
+  animation: var(--card-animation) 0.6s;
+}
+app-card:nth-of-type(4):hover {
+  transform: translateX(calc(-2rem * sin(5deg)))
+    translateY(calc(-2rem * cos(5deg))) rotate(-5deg);
+}
+
+app-card:nth-of-type(5) {
+  rotate: 15deg;
+
+  animation: var(--card-animation) 0.8s;
+}
+app-card:nth-of-type(5):hover {
+  transform: translateX(calc(-4rem * sin(10deg)))
+    translateY(calc(-3rem * cos(10deg))) rotate(-5deg);
+}
+
+app-card {
+  width: var(--card-width);
+  aspect-ratio: 2/3;
+  border-radius: 1rem;
+  position: absolute;
+  top: calc(50% - (var(--card-width) * 1.5 / 2));
+  right: calc(50% - (var(--card-width) / 1.5));
+  transform-origin: 10% 90%;
+  border: solid 2px #78787800;
+  object-fit: scale-down;
+  transition: rotate 0.15s ease-in-out, transform 0.22s ease-in-out;
+}

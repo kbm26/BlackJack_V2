@@ -98,23 +98,37 @@ export class GameService {
   }
 
   public isGameOver(): boolean {
-    return this.isBust(this.playersHand) || this.isBust(this.dealersHand) || this.calculateHand(this.playersHand) === 21 || this.calculateHand(this.playersHand) === 21;
+    return (
+      this.isBust(this.playersHand) ||
+      this.isBust(this.dealersHand) ||
+      this.calculateHand(this.playersHand) === 21 ||
+      this.calculateHand(this.dealersHand) === 21
+    );
   }
 
   public endingMessage(): string {
     const playerValue = this.calculateHand(this.playersHand);
     const dealerValue = this.calculateHand(this.dealersHand);
 
-    if (playerValue > 21) {
-      return 'You bust, Dealer wins';
+    const playerBlackjack = playerValue === 21 && this.playersHand.length === 2;
+    const dealerBlackjack = dealerValue === 21 && this.dealersHand.length === 2;
+
+    if (playerBlackjack && dealerBlackjack) {
+      return "Both have Blackjack! It's a Push!";
+    } else if (playerBlackjack) {
+      return "Blackjack! You win!";
+    } else if (dealerBlackjack) {
+      return "Dealer has Blackjack. Dealer wins!";
+    } else if (playerValue > 21) {
+      return 'You bust! Dealer wins.';
     } else if (dealerValue > 21) {
-      return 'Dealer bust, You wins';
+      return 'Dealer busts! You win!';
     } else if (playerValue > dealerValue) {
-      return 'You win';
+      return 'You win!';
     } else if (dealerValue > playerValue) {
-      return 'Dealer wins';
+      return 'Dealer wins.';
     } else {
-      return 'It’s a Push!';
+      return "It's a Push!";
     }
   }
 
@@ -130,14 +144,51 @@ export class GameService {
     this.dealToHand(this.dealersHand);
   }
 
+  public getDealersFirstCard(): Card {
+    return this.dealersHand[0]
+  }
+
+  private calculateHandValueForDealer(): number {
+    let total = 0;
+    let aces = 0;
+    for (const card of this.dealersHand) {
+      if (card.symbol === 'ace') {
+        total += 11;
+        aces += 1;
+      } else {
+        total += card.value[0];
+      }
+    }
+
+    while (total > 21 && aces > 0) {
+      total -= 10;
+      aces -= 1;
+    }
+
+    return total;
+  }
+
   public dealerPlay(): void {
-    while (this.calculateHand(this.dealersHand) < 17) {
+    let dealerTotal = this.calculateHandValueForDealer();
+
+    while (dealerTotal < 17 || (dealerTotal === 17 && this.hasSoft17(this.dealersHand))) {
       this.dealToDealer();
+      dealerTotal = this.calculateHandValueForDealer();
     }
   }
 
-  public getDealersFirstCard(): Card {
-    return this.dealersHand[0]
+  private hasSoft17(hand: Card[]): boolean {
+    let total = 0;
+    let hasAce = false;
+    for (const card of hand) {
+      if (card.symbol === 'ace') {
+        hasAce = true;
+        total += 11;
+      } else {
+        total += card.value[0];
+      }
+    }
+    return hasAce && total === 17;
   }
 
   public resetGame(): void {
@@ -148,6 +199,7 @@ export class GameService {
     this.shuffleDeck();
     this.dealToPlayer();
     this.dealToPlayer();
+    this.dealToDealer();
     this.dealToDealer();
   }
 
